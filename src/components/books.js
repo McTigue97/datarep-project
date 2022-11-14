@@ -5,7 +5,8 @@ export class Books extends React.Component{
     render(){
         return this.props.books.map(
             (book)=>{
-                return <BookItem book={book} key={book.isbn}></BookItem>
+                //is changed to book_id for mongo db
+                return <BookItem book={book} key={book._id}></BookItem>
             }
         );
     }

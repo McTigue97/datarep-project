@@ -22,6 +22,32 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
+//mongoose will connect to Mongo DB
+// getting-started.js
+const mongoose = require('mongoose');
+
+main().catch(err => console.log(err));
+
+//will connect to mongo db database I created
+async function main() {
+  await mongoose.connect('mongodb+srv://admin:admin@cluster0.cbz3c00.mongodb.net/?retryWrites=true&w=majority');
+  
+  // use `await mongoose.connect('mongodb://user:password@localhost:27017/test');` if your database has auth enabled
+}
+
+//defined the schema and what data will be stored | title, cover and author
+const bookSchema = new mongoose.Schema({
+  title: String,
+  cover: String,
+  author: String
+});
+
+//the model will convert the schema to a model
+//model for the bookschema
+const bookmodel = mongoose.model('books', bookSchema);
+
+
+
 //listening at /name address on port 4000, will display "Hello World" to the screen
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -30,52 +56,72 @@ app.get('/', (req, res) => {
 //post method is sent to Port 4000 /api/books
 app.post('/api/books',(req, res)=>{
     console.log(req.body);
+  //will create record for title, cover and author and pull that data
+    bookmodel.create({
+      title:req.body.title,
+      cover:req.body.cover,
+      author:req.body.author
+    })
     res.send('Book added');
 })
 
 //Listening for get method
 app.get('/api/books', (req, res)=>{
-    const books = [
-        {
-        "title": "Learn Git in a Month of Lunches",
-        "isbn": "1617292419",
-        "pageCount": 0,
-        "thumbnailUrl":
-        "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg", "authors": ["Rick Umali"],
-        "categories": []
-        },
-        {
-        "title": "MongoDB in Action, Second Edition",
-        "isbn": "1617291609",
-        "pageCount": 0,
-        "thumbnailUrl":
-        "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
-        "status": "MEAP",
-        "authors": [
-        "Kyle Banker",
-        "Peter Bakkum",
-        "Tim Hawkins",
-        "Shaun Verch",
-        "Douglas Garrett"
-        ],
-        "categories": []
-    },
-    {
-    "title": "Getting MEAN with Mongo, Express, Angular, and Node",
-    "isbn": "1617292036",
-    "pageCount": 0,
-    "thumbnailUrl":
-    "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
-    "status": "MEAP",
-    "authors": ["Simon Holmes"],
-    "categories": []
-    }
-    ];
+  //  const books = [
+        //{
+        //"title": "Learn Git in a Month of Lunches",
+       // "isbn": "1617292419",
+       // "pageCount": 0,
+        //"thumbnailUrl":
+        //"https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/umali.jpg", "authors": ["Rick Umali"],
+        //"categories": []
+        //},
+       // {
+        //"title": "MongoDB in Action, Second Edition",
+        //"isbn": "1617291609",
+       // "pageCount": 0,
+       // "thumbnailUrl":
+       // "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/banker2.jpg",
+        //"status": "MEAP",
+        //"authors": [
+        //"Kyle Banker",
+        //"Peter Bakkum",
+        //"Tim Hawkins",
+        //"Shaun Verch",
+        //"Douglas Garrett"
+        //],
+        //"categories": []
+   // },
+   // {
+    //"title": "Getting MEAN with Mongo, Express, Angular, and Node",
+    //"isbn": "1617292036",
+   // "pageCount": 0,
+   // "thumbnailUrl":
+    //"https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/sholmes.jpg",
+    //"status": "MEAP",
+    //"authors": ["Simon Holmes"],
+   // "categories": []
+   // }
+    //];
 
-    //Displays books array  
-    res.status(200).json({
-        myBooks:books
+    //finds the data like the get method
+    bookmodel.find((err,data)=>{
+      console.log(data);
+      res.json(data);
     })
+
+    // //Displays books array  
+    // res.status(200).json({
+    //     myBooks:books
+    // })
+    })
+
+    //allows a serach for a specific book
+    app.get('/api/books/id',(req,res)=>{
+      console.log(req.params.id);
+      bookmodel.findById(req.params.id,(err,data)=>{
+        res.json(data);
+      });
     })
 
 //Listens for port
