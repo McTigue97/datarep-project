@@ -117,11 +117,25 @@ app.get('/api/books', (req, res)=>{
     })
 
     //allows a serach for a specific book
-    app.get('/api/books/id',(req,res)=>{
+    app.get('/api/book/:id',(req,res)=>{
       console.log(req.params.id);
       bookmodel.findById(req.params.id,(err,data)=>{
         res.json(data);
       });
+    })
+
+    //Will listen for API/book/:id that will generate a response
+    //this url will have an id
+    //req.parmas will pull the ID of the book out and update it
+    app.put('/api/book/:id',(req,res)=>{
+      console.log("Update"+req.params.id);
+
+      //Call back function that will overide the record
+      //it will take out the orginal data and replace it with the edited data
+      //will send back some data
+      bookmodel.findByIdAndUpdate(req.params.id,req.body,{new: true},(error, data)=>{
+        res.send(data);
+    })
     })
 
 //Listens for port

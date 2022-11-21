@@ -1,5 +1,7 @@
 import React from "react";
 import Card from 'react-bootstrap/Card';
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export class BookItem extends React.Component {
     render() {
@@ -20,6 +22,8 @@ export class BookItem extends React.Component {
                     </footer>
                         </blockquote>
                     </Card.Body>
+                    {/* React rooter dom link that looks like a button */}
+                    <Link to={"/edit/"+this.props.book._id} className="btn btn-primary">Edit</Link>
                 </Card>
             </div>
         );
