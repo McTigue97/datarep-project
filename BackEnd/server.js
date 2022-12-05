@@ -138,6 +138,17 @@ app.get('/api/books', (req, res)=>{
     })
     })
 
+    //function for delete
+    //find by ID and delete 
+    //callback function executes when deleted and the data is sent back
+    app.delete('/api/book/:id', (req,res)=>{
+      console.log("Book has been Deleted!"+req.params.id);
+
+      bookmodel.findByIdAndDelete(req.params.id, (error,data)=>{
+        res.send(data);
+      })
+    })
+
 //Listens for port
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
