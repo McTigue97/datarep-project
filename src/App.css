@@ -13,6 +13,10 @@
   }
 }
 
+.title{
+  font-family: Nexa, serif;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -21,13 +25,48 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #FFD700;
 }
 
 .App-link {
   color: #61dafb;
 }
 
+.textbg{
+  background-color: #282c34;
+  border: 5px solid #282c34;
+  border-radius: 15px;
+  color: #FFD700;
+  opacity: 90%;
+}
+
+.carobg{
+  width: 80%;
+
+}
+
+.formStyle{
+  width: 70%;
+  padding: 3%;
+  border: 10px solid #FFD700;
+  border-radius: 2%;
+}
+
+.updateStyle{
+  width: 70%;
+  padding: 3%;
+  border: 10px solid #ffc107;
+  border-radius: 2%;
+}
+
+.intro{
+  width: 70%;;
+}
+
+.vid{
+  width: 100%;
+}
+ 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +75,4 @@
     transform: rotate(360deg);
   }
 }
+

@@ -8,17 +8,23 @@ export class Create extends React.Component {
         super();
         //binding to events
         this.handleSubmit = this.handleSubmit.bind(this);
-        //binding for book title
-        this.onChangeBookTitle = this.onChangeBookTitle.bind(this);
-        //binding for book cover
-        this.onChangeBookCover = this.onChangeBookCover.bind(this);
-        //binding for book author
-        this.onChangeBookAuthor = this.onChangeBookAuthor.bind(this);
+        //binding for game name
+        this.onChangeGameName = this.onChangeGameName.bind(this);
+        //binding for game info
+        this.onChangeGameCover = this.onChangeGameCover.bind(this);
+        //binding for Game Developer
+        this.onChangeGameDeveloper = this.onChangeGameDeveloper.bind(this);
+        //binding for Game Year Released
+        this.onChangeGameYearreleased = this.onChangeGameYearreleased.bind(this);
+        //binding for Game Rating
+        this.onChangeGameRating = this.onChangeGameRating.bind(this);
         //when form loads empty strings will be there
         this.state = {
-            title:'',
+            name:'',
             cover:'',
-            author:''
+            developer:'',
+            yearreleased: '',
+            rating: ''
         }
     }
 
@@ -28,83 +34,122 @@ export class Create extends React.Component {
         e.preventDefault(); //cancels the event
         //will display message in console
         console.log(`Button clicked 
-        ${this.state.title},
+        ${this.state.name},
         ${this.state.cover},
-        ${this.state.author}`);
+        ${this.state.developer},
+        ${this.state.yearreleased},
+        ${this.state.rating}`);
 
-        //creates a const for each of the following, title, cover, author
-        const book = {
-            title:this.state.title,
+        //creates a const for each of the following, name, info, developer, year released, rating
+        const game = {
+            name:this.state.name,
             cover:this.state.cover,
-            author:this.state.author
+            developer:this.state.developer,
+            yearreleased:this.state.yearreleased,
+            rating:this.state.rating
         }
         //axios has the ability to make HTTP requests from the browser and handle the transformation of request and response data
-        //axios uses port 4000/api/books to handle the request and response of data    
-        axios.post('http://localhost:4000/api/books',book)
+        //axios uses port 4000/api/games to handle the request and response of data    
+        axios.post('http://localhost:4000/api/games',game)
         .then()
         .catch();
 
         //will reset the states to 0
         this.setState({
-            title:'',
+            name:'',
             cover:'',
-            author:''
+            developer:'',
+            yearreleased:'',
+            rating: ''
         })
     }
 
-    //title is a variable 
-    onChangeBookTitle(e){ // When the value inside the field changes it will update the state
+    //name is a variable 
+    onChangeGameName(e){ // When the value inside the field changes it will update the state
         this.setState({
-            title:e.target.value
+            name:e.target.value
         })
     }
-    //method for book cover
-    onChangeBookCover(e){ // When the value inside the field changes it will update the state
+    //method for game info
+    onChangeGameCover(e){ // When the value inside the field changes it will update the state
         this.setState({
             cover:e.target.value
         })
     }
-    //method for book author
-    onChangeBookAuthor(e){ // When the value inside the field changes it will update the state
+    //method for game developer
+    onChangeGameDeveloper(e){ // When the value inside the field changes it will update the state
         this.setState({
-            author:e.target.value
+            developer:e.target.value
         })
     }
+
+    //method for year released
+        onChangeGameYearreleased(e){ // When the value inside the field changes it will update the state
+            this.setState({
+                yearreleased:e.target.value
+            })
+        }
+
+    //method for rating
+         onChangeGameRating(e){ // When the value inside the field changes it will update the state
+            this.setState({
+            rating:e.target.value
+                })
+            }
 
     //render will return our display
     render() {
         return (
             <div>
-                <h3>Hello from Create Component!</h3>
+                <h3>Hello from Game Place!</h3>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <label>Add Book Title: </label>
+                        <label>Add Game Name: </label>
                         <input type="text"
                             className="form-control"
-                            value={this.state.title}
-                            onChange={this.onChangeBookTitle}
+                            value={this.state.name}
+                            onChange={this.onChangeGameName}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label>Add Book Cover: </label>
+                        <label>Add Game Cover: </label>
                         <input type="text"
                             className="form-control"
                             value={this.state.cover}
-                            onChange={this.onChangeBookCover}
+                            onChange={this.onChangeGameCover}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label>Add Author: </label>
+                        <label>Add Developer: </label>
                         <input type="text"
                             className="form-control"
-                            value={this.state.author}
-                            onChange={this.onChangeBookAuthor}
+                            value={this.state.developer}
+                            onChange={this.onChangeGameDeveloper}
                         />
                     </div>
 
-                    <input type="submit" value="Add Book" />
+                    
+                    <div className="form-group">
+                        <label>Add Year Released: </label>
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.yearreleased}
+                            onChange={this.onChangeGameYearreleased}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Add your rating out of 10: </label>
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.rating}
+                            onChange={this.onChangeGameRating}
+                        />
+                    </div>
+
+                    <input type="submit" value="Add Game" />
                 </form>
             </div>
         );

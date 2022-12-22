@@ -5,18 +5,22 @@ import { useNavigate } from "react-router-dom";
 
 export function Functional(){
 
-    const [title, setTitle] = useState('');
+    const [name, setName] = useState('');
     const [cover, setCover] = useState('');
-    const [author, setAuthor] = useState('');
+    const [developer, setDeveloper] = useState('');
+    const [yearreleased, setYearreleased] = useState('');
+    const [rating, setRating] = useState('');
     
     const navigate = useNavigate();
 
     useEffect(()=>{
-        axios.get('http://localhost:4000/api/books/ggggjggjgj') //needs proper id not ggggjggjgj
+        axios.get('http://localhost:4000/api/games/ggggjggjgj') //needs proper id not ggggjggjgj
         .then((res)=>{
-            setTitle(res.data.title);
+            setName(res.data.name);
             setCover(res.data.cover);
-            setAuthor(res.data.author);
+            setDeveloper(res.data.developer);
+            setYearreleased(res.data.yearreleased);
+            setRating(res.data.rating);
         })
         .catch();
     },[]);
@@ -24,14 +28,16 @@ export function Functional(){
     const handleSubmit = (e)=>{
         e.preventDefault();
 
-        const newBook = {
-            title:title,
+        const newGame = {
+            name:name,
             cover:cover,
-            author:author
+            developer:developer,
+            yearreleased: yearreleased,
+            rating: rating
 
         }
 
-        axios.post('http://localhost:4000/api/books',newBook)
+        axios.post('http://localhost:4000/api/games',newGame)
         .then((res)=>{
             console.log(res);
             navigate('/read');
@@ -46,17 +52,17 @@ export function Functional(){
             <h1>Hello From Functional.js</h1>
             <form onSubmit={(handleSubmit)}>
                 <div>
-                    <label>Add Book Title</label>
+                    <label>Add Game Name</label>
                     <input 
                     type="text"
                     className="form-control"
-                    value={title}
-                    onChange={(e)=>(setTitle(e.target.value))}>
+                    value={name}
+                    onChange={(e)=>(setName(e.target.value))}>
                     </input>
                 </div>
                 
                 <div>
-                    <label>Add Cover Title</label>
+                    <label>Add Game Cover</label>
                     <input 
                     type="text"
                     className="form-control"
@@ -66,15 +72,36 @@ export function Functional(){
                     </div>
 
                 <div>
-                    <label>Add Author Title</label>
+                    <label>Add Developer</label>
                     <input 
                     type="text"
                     className="form-control"
-                    value={author}
-                    onChange={(e)=>(setAuthor(e.target.value))}>
+                    value={developer}
+                    onChange={(e)=>(setDeveloper(e.target.value))}>
                     </input>
                 </div>
-            <input type="submit" value="Add Book"></input>
+
+                <div>
+                    <label>Add Year Released</label>
+                    <input 
+                    type="text"
+                    className="form-control"
+                    value={yearreleased}
+                    onChange={(e)=>(setYearreleased(e.target.value))}>
+                    </input>
+                </div>
+
+                <div>
+                    <label>Add Game Rating</label>
+                    <input 
+                    type="text"
+                    className="form-control"
+                    value={rating}
+                    onChange={(e)=>(setRating(e.target.value))}>
+                    </input>
+                </div>
+
+            <input type="submit" value="Add Game"></input>
             </form>
         </div>
     );

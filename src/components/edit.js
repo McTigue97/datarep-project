@@ -12,9 +12,11 @@ let { id } = useParams();
 
 // update arrays using the React useState()
 // and without the Array object's push() method
-const [title, setTitle] = useState("");
+const [name, setName] = useState("");
 const [cover, setCover] = useState("");
-const [author, setAuthor] = useState("");
+const [developer, setDeveloper] = useState("");
+const [yearreleased, setYearreleased] = useState("");
+const [rating, setRating] = useState("");
 
 // useNavigate return a function that we can use to navigate
 // navigate is used as a hook that will bring the user back to read.js when finished editing
@@ -28,9 +30,9 @@ useEffect(() => {
 //make a HTTP Request with GET method and pass as part of the
 //url.
 //go to this URL, server is listening for HTTP request
-//it will get the book with the same ID
+//it will get the game with the same ID
 
-axios.get('http://localhost:4000/api/book/' + id)
+axios.get('http://localhost:4000/api/game/' + id)
 
 //will send back response
 
@@ -38,27 +40,31 @@ axios.get('http://localhost:4000/api/book/' + id)
 
     // Assign Response data to the arrays using useState.
     //Will update these arrays and puts a value into each of them
-    setTitle(response.data.title);
+    setName(response.data.name);
     setCover(response.data.cover);
-    setAuthor(response.data.author);
+    setDeveloper(response.data.developer);
+    setYearreleased(response.data.yearreleased);
+    setRating(response.data.rating);
     })
     .catch(function (error) {
     console.log(error);
     })
     }, []);
 
-    //the handle submit will display title, cover, author
+    //the handle submit will display name, cover, developer and year released
     const handleSubmit = (event) => {
     event.preventDefault();
-    const newBook = {
+    const newGame = {
     id: id,
-    title: title,
+    name: name,
     cover: cover,
-    author: author
+    developer: developer,
+    yearreleased: yearreleased,
+    rating: rating
     };
 
-    /* Will edit the book details */
-    axios.put('http://localhost:4000/api/book/' + id, newBook)
+    /* Will edit the game details */
+    axios.put('http://localhost:4000/api/game/' + id, newGame)
     .then((res) => {
     console.log(res.data);
     //will navigate back to read.js when dinished editing
@@ -70,15 +76,15 @@ axios.get('http://localhost:4000/api/book/' + id)
     <div>      
     <form onSubmit={handleSubmit}>
     <div className="form-group">
-    <label>Edit Book Title: </label>
+    <label>Edit Game Name: </label>
     <input type="text"
     className="form-control"
-    value={title}
-    onChange={(e) => setTitle(e.target.value)}
+    value={name}
+    onChange={(e) => setName(e.target.value)}
     />
     </div>
     <div className="form-group">
-    <label>Edit Book Cover: </label>
+    <label>Edit Game Cover: </label>
     <input type="text"
     className="form-control"
 
@@ -87,15 +93,34 @@ axios.get('http://localhost:4000/api/book/' + id)
     />
 </div>
     <div className="form-group">
-    <label>Edit Book Author: </label>
+    <label>Edit Game Developer: </label>
     <input type="text"
     className="form-control"
-    value={author}
-    onChange={(e) => setAuthor(e.target.value)}
+    value={developer}
+    onChange={(e) => setDeveloper(e.target.value)}
     />
     </div>
+
     <div className="form-group">
-    <input type="submit" value="Edit Book" className="btn btn-primary"/></div>
+    <label>Edit Year Released: </label>
+    <input type="text"
+    className="form-control"
+    value={yearreleased}
+    onChange={(e) => setYearreleased(e.target.value)}
+    />
+    </div>
+
+    <div className="form-group">
+    <label>Edit Game Rating: </label>
+    <input type="text"
+    className="form-control"
+    value={rating}
+    onChange={(e) => setRating(e.target.value)}
+    />
+    </div>
+
+    <div className="form-group">
+    <input type="submit" value="Edit Game" className="btn btn-primary"/></div>
     </form>
     </div>
 );
