@@ -3,6 +3,12 @@ const app = express()
 const port = 4000
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const pat = require('pat');
+
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
+
 
 //cors = Cross-Origin Resource Sharing
 //cors allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served
@@ -148,6 +154,12 @@ app.get('/api/books', (req, res)=>{
         res.send(data);
       })
     })
+
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/../build/index.html'));
+  });
+  
 
 //Listens for port
 app.listen(port, () => {
